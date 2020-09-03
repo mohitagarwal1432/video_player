@@ -1,0 +1,109 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="descriptison">
+    <meta content="" name="keywords">
+
+    <title>Video Player</title>
+
+    <link href="videojs/css/videojs.css" rel="stylesheet" />
+    <link href="videojs/css/videojs-qualityselector.css" rel="stylesheet" />
+    <link href="videojs/css/videojs-watermark.css" rel="stylesheet" />
+    <link href="videojs/css/custom.css" rel="stylesheet" />
+	<script src="videojs/js/videojs-ie8.js"></script>
+	<style>
+		body{
+			margin: 0px;
+			background-color: #f2f2f2;
+		}
+	</style>
+</head>
+
+<body>
+    <video id="video_1" class="video-js vjs-big-play-centered" controls data-setup='{}' poster="videojs/logo.png">
+  		<source src="https://vjs.zencdn.net/v/oceans.mp4?sd" type='video/mp4' label='SD' res='480' />
+	</video>
+		
+	<script src="videojs/js/videojs.js"></script>
+	<script src="videojs/js/videojs-hotkeys.js"></script>
+	<script src="videojs/js/videojs-qualityselector.js"></script>
+	<script src="videojs/js/videojs-watermark.js"></script>
+	<script>
+		var myVideo = document.getElementById("video_1");
+		if (myVideo.addEventListener) {
+			myVideo.addEventListener('contextmenu', function(e) {
+				e.preventDefault();
+			}, false);
+		} else {
+			myVideo.attachEvent('oncontextmenu', function() {
+				window.event.returnValue = false;
+			});
+		}
+		var time;
+		var player = videojs('video_1', {
+			fluid: true,
+			playbackRates: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
+			plugins: {
+				hotkeys: {
+					volumeStep: 0.1,
+					seekStep: 5,
+					enableModifiersForNumbers: false
+				},
+//				qualityselector: {
+//					sources: [
+//						{ format: 'hd720', src: 'test1.mp4', type: 'video/mp4'},
+//						{ format: 'large', src: 'test2.mp4', type: 'video/mp4'},
+//						{ format: 'medium', src: 'test3.mp4', type: 'video/mp4'}
+//					],
+//					formats: [
+//						{ code: 'hd720', name: '720p' },
+//						{ code: 'large', name: '480p' },
+//						{ code: 'medium', name: '360p' }
+//					],
+//					onFormatSelected: function(format) {
+//						console.log(format);
+//						console.log(player.currentSrc());
+//						console.log(player.currentTime());
+//						time = player.currentTime();
+//						
+//						setTimeout(function(){
+//							player.currentTime(time)
+//						}, 100); 
+//					}
+//				}
+			}
+		});
+		player.qualityselector({
+			sources: [
+				{ format: 'hd720', src: 'test1.mp4', type: 'video/mp4'},
+				{ format: 'large', src: 'test2.mp4', type: 'video/mp4'},
+				{ format: 'medium', src: 'test3.mp4', type: 'video/mp4'}
+			],
+			formats: [
+				{ code: 'hd720', name: '720p' },
+				{ code: 'large', name: '480p' },
+				{ code: 'medium', name: '360p' }
+			],
+			onFormatSelected: function(format) {
+				console.log(format);
+				console.log(player.currentSrc());
+				console.log(player.currentTime());
+				time = player.currentTime();
+
+				setTimeout(function(){
+					player.currentTime(time)
+				}, 100); 
+			}
+		});
+		player.watermark({
+			image: 'videojs/logo2.png',
+			position: 'bottom-right',
+			fadeTime: null,
+			url: 'https://walmiedu.com'
+			
+		});
+	</script>
+</body>
+</html>
